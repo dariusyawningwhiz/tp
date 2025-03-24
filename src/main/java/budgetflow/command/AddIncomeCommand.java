@@ -26,7 +26,6 @@ public class AddIncomeCommand extends Command {
             "please use DD-MM-YYYY format.";
 
 
-
     public AddIncomeCommand(String input) {
         super(input);
         this.commandType = CommandType.CREATE;
