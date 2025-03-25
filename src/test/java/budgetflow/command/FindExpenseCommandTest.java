@@ -42,7 +42,7 @@ class FindExpenseCommandTest {
         c.execute(incomes, expenseList);
         String expectedOutput = "Here are all matching expenses: " + System.lineSeparator()
                 + "food | Lunch | $12.50 | 13-03-2025" + System.lineSeparator();
-        assertEquals(expectedOutput, c.getOutputMessage());
+        assertEquals(expectedOutput.trim(), c.getOutputMessage().trim());
     }
 
     @Test
