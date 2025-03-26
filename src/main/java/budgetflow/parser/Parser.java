@@ -13,7 +13,6 @@ import budgetflow.command.ExitCommand;
 import budgetflow.exception.UnknownCommandException;
 import budgetflow.command.CompareExpenseCommand;
 import budgetflow.command.UpdateExpenseCommand;
-import budgetflow.exception.UnknownCommandException;
 
 import java.util.logging.Logger;
 
@@ -58,7 +57,7 @@ public class Parser {
             return new ExitCommand();
         } else if (input.startsWith(COMMAND_COMPARE)) {
             return new CompareExpenseCommand(input);
-        } else if (input.startsWith(COMMAND_UPDATE_EXPENSE)) {  // Check for update-expense command
+        } else if (input.startsWith(COMMAND_UPDATE_EXPENSE)) {
             return new UpdateExpenseCommand(input);
         } else {
             logger.warning("Unknown command received: " + input);
