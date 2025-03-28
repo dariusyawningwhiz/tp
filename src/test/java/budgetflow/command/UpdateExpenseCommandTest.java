@@ -6,7 +6,6 @@ import budgetflow.exception.MissingDescriptionException;
 import budgetflow.exception.MissingExpenseException;
 import budgetflow.exception.MissingAmountException;
 import budgetflow.exception.MissingDateException;
-import budgetflow.exception.InvalidNumberFormatException;
 import budgetflow.expense.Expense;
 import budgetflow.expense.ExpenseList;
 import budgetflow.income.Income;
@@ -102,7 +101,6 @@ class UpdateExpenseCommandTest {
         assertEquals("Error: Expense date is required.", exception.getMessage());
     }
 
-//check
     @Test
     void updateExpense_invalidCategory_throwsException() {
         ExpenseList expenseList = new ExpenseList();
@@ -118,7 +116,6 @@ class UpdateExpenseCommandTest {
         assertEquals("Error: Invalid category format.", exception.getMessage());
     }
 
-    //check
     @Test
     void updateExpense_invalidAmountFormat_throwsException() {
         ExpenseList expenseList = new ExpenseList();
