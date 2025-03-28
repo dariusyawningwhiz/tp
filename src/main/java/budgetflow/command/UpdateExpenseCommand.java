@@ -31,7 +31,8 @@ public class UpdateExpenseCommand extends Command {
     private static final String ERROR_INCORRECT_EXPENSE_DATE = "Error: Expense date is in wrong format. " +
             "Please use DD-MM-YYYY format.";
     private static final String ERROR_INVALID_INDEX = "Error: Invalid index. Expense not found.";
-
+    private static final String ERROR_INVALID_AMOUNT = "Error: Invalid amount format.";
+    private static final String ERROR_INVALID_CATEGORY = "Error: Invalid category format.";
     public UpdateExpenseCommand(String input) {
         super(input);
         this.commandType = CommandType.UPDATE;
@@ -110,6 +111,9 @@ public class UpdateExpenseCommand extends Command {
         matcher = pattern.matcher(input);
         if (matcher.find()) {
             category = matcher.group(1).trim();
+            if (!category.matches("[a-zA-Z0-9 ]+")) {  // Change the regex pattern as per your category requirements
+                throw new MissingCategoryException(ERROR_INVALID_CATEGORY);
+            }
         }
 
         // Extract description
@@ -126,7 +130,7 @@ public class UpdateExpenseCommand extends Command {
             try {
                 amount = Double.parseDouble(matcher.group(1));
             } catch (NumberFormatException e) {
-                throw new InvalidNumberFormatException();
+                throw new InvalidNumberFormatException(ERROR_INVALID_AMOUNT);
             }
         }
 

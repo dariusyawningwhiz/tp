@@ -102,6 +102,7 @@ class UpdateExpenseCommandTest {
         assertEquals("Error: Expense date is required.", exception.getMessage());
     }
 
+//check
     @Test
     void updateExpense_invalidCategory_throwsException() {
         ExpenseList expenseList = new ExpenseList();
@@ -117,6 +118,7 @@ class UpdateExpenseCommandTest {
         assertEquals("Error: Expense category is required.", exception.getMessage());
     }
 
+    //check
     @Test
     void updateExpense_invalidAmountFormat_throwsException() {
         ExpenseList expenseList = new ExpenseList();
@@ -159,7 +161,6 @@ class UpdateExpenseCommandTest {
         assertEquals(expectedOutput, c.getOutputMessage());
     }
 
-    // New Test: Handles empty input
     @Test
     void updateExpense_emptyInput_throwsException() {
         ExpenseList expenseList = new ExpenseList();
@@ -170,7 +171,6 @@ class UpdateExpenseCommandTest {
         assertEquals("Error: Expense details are required.", exception.getMessage());
     }
 
-    // New Test: Handles negative index input
     @Test
     void updateExpense_negativeIndex_throwsException() {
         ExpenseList expenseList = new ExpenseList();
