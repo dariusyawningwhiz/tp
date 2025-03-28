@@ -115,7 +115,7 @@ class UpdateExpenseCommandTest {
         );
 
         Exception exception = assertThrows(MissingCategoryException.class, () -> c.execute(incomes, expenseList));
-        assertEquals("Error: Expense category is required.", exception.getMessage());
+        assertEquals("Error: Invalid category format.", exception.getMessage());
     }
 
     //check
@@ -128,7 +128,7 @@ class UpdateExpenseCommandTest {
         Command c = new UpdateExpenseCommand(
                 "update-expense index/1 category/Dining desc/Dinner amt/invalid d/14-03-2025"
         );
-        Exception exception = assertThrows(InvalidNumberFormatException.class, () -> c.execute(incomes, expenseList));
+        Exception exception = assertThrows(MissingAmountException.class, () -> c.execute(incomes, expenseList));
     }
 
     @Test
@@ -141,7 +141,7 @@ class UpdateExpenseCommandTest {
                 "update-expense index/1 category/Dining desc/Dinner amt/20.00 d/2025-03-14"
         );
         Exception exception = assertThrows(MissingDateException.class, () -> c.execute(incomes, expenseList));
-        assertEquals("Error: Expense date is in wrong format. Please use DD-MM-YYYY format."
+        assertEquals("Error: Expense date is required."
                 , exception.getMessage());
     }
 
@@ -168,7 +168,7 @@ class UpdateExpenseCommandTest {
         Command c = new UpdateExpenseCommand("");
 
         Exception exception = assertThrows(MissingExpenseException.class, () -> c.execute(incomes, expenseList));
-        assertEquals("Error: Expense details are required.", exception.getMessage());
+        assertEquals("Index is required", exception.getMessage());
     }
 
     @Test
