@@ -15,7 +15,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UpdateExpenseCommandTest {
 
@@ -25,10 +26,13 @@ class UpdateExpenseCommandTest {
         List<Income> incomes = new ArrayList<>();
         expenseList.add(new Expense("Food", "Lunch", 12.50, "13-03-2025"));
 
-        Command c = new UpdateExpenseCommand("update-expense index/1 category/Dining desc/Dinner amt/20.00 d/14-03-2025");
+        Command c = new UpdateExpenseCommand(
+                "update-expense index/1 category/Dining desc/Dinner amt/20.00 d/14-03-2025"
+        );
         c.execute(incomes, expenseList);
 
-        String expectedOutput = "Expense updated at index 1: Dining | Dinner | $20.00 | 14-03-2025. Total Expenses: $20.00";
+        String expectedOutput =
+                "Expense updated at index 1: Dining | Dinner | $20.00 | 14-03-2025. Total Expenses: $20.00";
         assertEquals(expectedOutput, c.getOutputMessage());
     }
 
@@ -36,7 +40,9 @@ class UpdateExpenseCommandTest {
     void updateExpense_invalidIndex_throwsException() {
         ExpenseList expenseList = new ExpenseList();
         List<Income> incomes = new ArrayList<>();
-        Command c = new UpdateExpenseCommand("update-expense index/5 category/Food desc/Lunch amt/10.00 d/12-03-2025");
+        Command c = new UpdateExpenseCommand(
+                "update-expense index/5 category/Food desc/Lunch amt/10.00 d/12-03-2025"
+        );
 
         Exception exception = assertThrows(MissingExpenseException.class, () -> c.execute(incomes, expenseList));
         assertEquals("Error: Invalid index. Expense not found.", exception.getMessage());
@@ -103,19 +109,23 @@ class UpdateExpenseCommandTest {
         expenseList.add(new Expense("Food", "Lunch", 12.50, "13-03-2025"));
 
         // Using invalid category format that shouldn't match
-        Command c = new UpdateExpenseCommand("update-expense index/1 category/!@#$ desc/Dinner amt/20.00 d/14-03-2025");
+        Command c = new UpdateExpenseCommand(
+                "update-expense index/1 category/!@#$ desc/Dinner amt/20.00 d/14-03-2025"
+        );
 
         Exception exception = assertThrows(MissingCategoryException.class, () -> c.execute(incomes, expenseList));
         assertEquals("Error: Expense category is required.", exception.getMessage());
     }
-    
+
     @Test
     void updateExpense_invalidAmountFormat_throwsException() {
         ExpenseList expenseList = new ExpenseList();
         List<Income> incomes = new ArrayList<>();
         expenseList.add(new Expense("Food", "Lunch", 12.50, "13-03-2025"));
 
-        Command c = new UpdateExpenseCommand("update-expense index/1 category/Dining desc/Dinner amt/invalid d/14-03-2025");
+        Command c = new UpdateExpenseCommand(
+                "update-expense index/1 category/Dining desc/Dinner amt/invalid d/14-03-2025"
+        );
         Exception exception = assertThrows(InvalidNumberFormatException.class, () -> c.execute(incomes, expenseList));
     }
 
@@ -125,9 +135,12 @@ class UpdateExpenseCommandTest {
         List<Income> incomes = new ArrayList<>();
         expenseList.add(new Expense("Food", "Lunch", 12.50, "13-03-2025"));
 
-        Command c = new UpdateExpenseCommand("update-expense index/1 category/Dining desc/Dinner amt/20.00 d/2025-03-14");
+        Command c = new UpdateExpenseCommand(
+                "update-expense index/1 category/Dining desc/Dinner amt/20.00 d/2025-03-14"
+        );
         Exception exception = assertThrows(MissingDateException.class, () -> c.execute(incomes, expenseList));
-        assertEquals("Error: Expense date is in wrong format. Please use DD-MM-YYYY format.", exception.getMessage());
+        assertEquals("Error: Expense date is in wrong format. Please use DD-MM-YYYY format."
+                , exception.getMessage());
     }
 
     @Test
@@ -136,10 +149,13 @@ class UpdateExpenseCommandTest {
         List<Income> incomes = new ArrayList<>();
         expenseList.add(new Expense("Food", "Lunch", 12.50, "13-03-2025"));
 
-        Command c = new UpdateExpenseCommand("update-expense index/1 category/Dining desc/Dinner amt/20.00 d/14-03-2025 extra/param");
+        Command c = new UpdateExpenseCommand(
+                "update-expense index/1 category/Dining desc/Dinner amt/20.00 d/14-03-2025 extra/param"
+        );
         c.execute(incomes, expenseList);
 
-        String expectedOutput = "Expense updated at index 1: Dining | Dinner | $20.00 | 14-03-2025. Total Expenses: $20.00";
+        String expectedOutput =
+                "Expense updated at index 1: Dining | Dinner | $20.00 | 14-03-2025. Total Expenses: $20.00";
         assertEquals(expectedOutput, c.getOutputMessage());
     }
 
@@ -159,7 +175,9 @@ class UpdateExpenseCommandTest {
     void updateExpense_negativeIndex_throwsException() {
         ExpenseList expenseList = new ExpenseList();
         List<Income> incomes = new ArrayList<>();
-        Command c = new UpdateExpenseCommand("update-expense index/-1 category/Food desc/Lunch amt/10.00 d/12-03-2025");
+        Command c = new UpdateExpenseCommand(
+                "update-expense index/-1 category/Food desc/Lunch amt/10.00 d/12-03-2025"
+        );
 
         Exception exception = assertThrows(MissingExpenseException.class, () -> c.execute(incomes, expenseList));
         assertEquals("Error: Invalid index. Expense not found.", exception.getMessage());
@@ -172,10 +190,13 @@ class UpdateExpenseCommandTest {
         expenseList.add(new Expense("Food", "Lunch", 12.50, "13-03-2025"));
 
         // Input with extra parameters like `extra/param`
-        Command c = new UpdateExpenseCommand("update-expense index/1 category/Dining desc/Dinner amt/20.00 d/14-03-2025 extra/param");
+        Command c = new UpdateExpenseCommand(
+                "update-expense index/1 category/Dining desc/Dinner amt/20.00 d/14-03-2025 extra/param"
+        );
         c.execute(incomes, expenseList);
 
-        String expectedOutput = "Expense updated at index 1: Dining | Dinner | $20.00 | 14-03-2025. Total Expenses: $20.00";
+        String expectedOutput =
+                "Expense updated at index 1: Dining | Dinner | $20.00 | 14-03-2025. Total Expenses: $20.00";
         assertEquals(expectedOutput, c.getOutputMessage());
     }
 }
